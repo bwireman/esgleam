@@ -12,7 +12,8 @@
   "scripts": {
     "clean": "rm -rf dist",
     "prepublish": "tsc",
-    "lint": "eslint . --ext .ts --fix"
+    "lint": "eslint index.ts --ext .ts --fix",
+    "ci": "eslint index.ts --ext .ts"
   },
   "devDependencies": {
     "@types/node": "^17.0.22",
