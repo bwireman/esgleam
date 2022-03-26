@@ -1,0 +1,11 @@
+{
+  "name": "example",
+  "version": "1.0.0",
+  "license": "MIT",
+  "devDependencies": {
+    "colors": "^1.4.0"
+  },
+  "scripts": {
+    "build": "node ../plugin.js && node out.js"
+  }
+}
