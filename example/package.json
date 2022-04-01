@@ -3,9 +3,11 @@
   "version": "1.0.0",
   "license": "MIT",
   "devDependencies": {
-    "colors": "^1.4.0"
+    "colors": "^1.4.0",
+    "esbuild": "^0.14.29"
   },
   "scripts": {
-    "build": "node ../plugin.js && node out.js"
-  }
+    "build": "rm out.js && gleam clean ; cd .. ; yarn run clean ; yarn run prepublish ; cd example ; node entry.mjs && node out.js"
+  },
+  "dependencies": {}
 }
