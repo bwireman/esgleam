@@ -5,7 +5,9 @@ import toml from "toml"
 import path from "path"
 import { Plugin, PluginBuild, Message } from "esbuild"
 
-const convertMessage = (message: string): Message => ({ pluginName: "es-gleam", location: null, notes: [], detail: null, text: `\nes-gleam:\n${message}` })
+const name = "esgleam"
+
+const convertMessage = (message: string): Message => ({ pluginName: name, location: null, notes: [], detail: null, text: `\n${name}:\n${message}` })
 
 const compile = (gleam_dir: string, extra_args: string[]) => {
     const pwd: string = process.cwd()
@@ -15,7 +17,8 @@ const compile = (gleam_dir: string, extra_args: string[]) => {
     if (process.cwd() !== pwd) {
         process.chdir("..")
     }
-    return { out: gleam.stdout, err: gleam.stderr }
+
+    return { out: gleam.stdout, stderr: gleam.stderr, err: gleam.error }
 }
 
 const load_gleam_name = async (gleam_dir: string): Promise<string> => {
@@ -29,7 +32,7 @@ export interface EsGleamOptions { project_root: string, main_function: string, c
 
 export function esgleam({ project_root, main_function, compile_args }: EsGleamOptions): Plugin {
     return {
-        name: "esgleam",
+        name: name,
         setup(build: PluginBuild) {
             build.onLoad({ filter: /\.gleam$/ }, async (args) => {
                 if (project_root === undefined) {
@@ -41,10 +44,15 @@ export function esgleam({ project_root, main_function, compile_args }: EsGleamOp
                 const project_name: string = await load_gleam_name(project_root)
                 const build_path = `${project_root}/build/dev/javascript/${project_name}/dist`
 
-                const { out: _, err } = compile(project_root, compile_args)
-                if (err.length > 0) {
-                    return { errors: [convertMessage(err.toString())] }
+                const { out: _, stderr, err } = compile(project_root, compile_args)
+                if (stderr && stderr.length > 0) {
+                    return { errors: [convertMessage(stderr.toString())] }
                 }
+
+                if (err && err?.message.length > 0) {
+                    return { errors: [convertMessage(`Error running gleam: ${err.message}`)] }
+                }
+
                 let contents = await fs.promises.readFile(`${build_path}/${filename}`, "utf8")
 
                 if (main_function !== undefined) {
