@@ -7,7 +7,8 @@
     "esbuild": "^0.14.29"
   },
   "scripts": {
-    "build": "rm out.js && gleam clean ; cd .. ; yarn run clean ; yarn run prepublish ; cd example ; node entry.mjs && node out.js"
+    "build": "rm -f out.js && gleam clean ; cd .. ; yarn run clean ; yarn run prepublish ; cd example ; node entry.mjs",
+    "test": "yarn build && node out.js"
   },
   "dependencies": {}
 }
