@@ -50,6 +50,4 @@ export interface EsGleamOptions {
     // other flags to be passed to the gleam compiler
     compile_args: string[];
 }
-
-export declare function esgleam({ project_root, main_function, compile_args }: EsGleamOptions): Plugin;
 ```

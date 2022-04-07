@@ -1,6 +1,6 @@
 {
   "name": "esgleam",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "repository": "github:bwireman/esgleam",
@@ -22,6 +22,11 @@
     "lint": "eslint index.ts --ext .ts --fix",
     "ci": "eslint index.ts --ext .ts"
   },
+  "files": [
+    "dist/",
+    "README.md",
+    "LICENSE"
+  ],
   "devDependencies": {
     "@types/node": "^17.0.23",
     "@typescript-eslint/eslint-plugin": "^5.18.0",
