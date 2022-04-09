@@ -5,9 +5,9 @@ import toml from "toml"
 import path from "path"
 import { Plugin, PluginBuild, Message } from "esbuild"
 
-const name = "esgleam"
+const PLUGIN_NAME = "esgleam"
 
-const convertMessage = (message: string): Message => ({ pluginName: name, location: null, notes: [], detail: null, text: `\n${name}:\n${message}` })
+const convertMessage = (message: string): Message => ({ pluginName: PLUGIN_NAME, location: null, notes: [], detail: null, text: `\n${PLUGIN_NAME}:\n${message}` })
 
 const compile = (gleam_dir: string, extra_args: string[]) => {
     const pwd: string = process.cwd()
@@ -28,18 +28,15 @@ const load_gleam_name = async (gleam_dir: string): Promise<string> => {
     return name
 }
 
-export interface EsGleamOptions { project_root: string, main_function: string, compile_args: string[] }
-
-export function esgleam({ project_root, main_function, compile_args }: EsGleamOptions): Plugin {
+export interface EsGleamOptions { project_root?: string, main_function?: string, compile_args?: string[] }
+export function esgleam(opts: EsGleamOptions | undefined = undefined): Plugin {
     return {
-        name: name,
+        name: PLUGIN_NAME,
         setup(build: PluginBuild) {
             build.onLoad({ filter: /\.gleam$/ }, async (args) => {
-                if (project_root === undefined) {
-                    project_root = "."
-                }
+                const project_root = opts?.project_root ?? "."
+                const compile_args = opts?.compile_args ?? []
 
-                compile_args = compile_args || []
                 const filename: string = path.basename(args.path).replace(".gleam", ".mjs")
                 const project_name: string = await load_gleam_name(project_root)
                 const build_path = `${project_root}/build/dev/javascript/${project_name}/dist`
@@ -54,9 +51,8 @@ export function esgleam({ project_root, main_function, compile_args }: EsGleamOp
                 }
 
                 let contents = await fs.promises.readFile(`${build_path}/${filename}`, "utf8")
-
-                if (main_function !== undefined) {
-                    contents += `\n\n${main_function}();`
+                if (opts?.main_function !== undefined) {
+                    contents += `\n\n${opts.main_function}();`
                 }
 
                 return { contents, loader: "js", resolveDir: build_path }

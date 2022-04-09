@@ -7,5 +7,5 @@ esbuild.build({
     bundle: true,
     platform: "node",
     outfile: "out.js",
-    plugins: [esgleam.esgleam({ project_root: ".", main_function: "main", compile_args: ["--warnings-as-errors"] })],
+    plugins: [esgleam.esgleam({ main_function: "main" })],
 }).catch(() => process.exit(1))
