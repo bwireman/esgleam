@@ -43,11 +43,11 @@ esbuild.build({
 export interface EsGleamOptions {
     // path to the root of the gleam project
     // default: "."
-    project_root: string;
+    project_root?: string;
     // if defined the output file will call this function with no args
     // useful for bundled js files
-    main_function: string;
+    main_function?: string;
     // other flags to be passed to the gleam compiler
-    compile_args: string[];
+    compile_args?: string[];
 }
 ```
