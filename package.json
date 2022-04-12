@@ -38,5 +38,11 @@
   },
   "peerDependencies": {
     "esbuild": "^0.14.36"
-  }
+  },
+  "keywords": [
+    "gleam",
+    "esbuild",
+    "plugin",
+    "bundler"
+  ]
 }
