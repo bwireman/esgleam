@@ -28,4 +28,4 @@ jobs:
       - run: yarn
       - run: yarn run ci
       - run: yarn run prepublish
-      - run: cd example && yarn && yarn run test
+      - run: yarn test

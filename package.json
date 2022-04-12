@@ -20,7 +20,8 @@
     "clean": "rm -rf dist",
     "prepublish": "tsc",
     "lint": "eslint index.ts --ext .ts --fix",
-    "ci": "eslint index.ts --ext .ts"
+    "ci": "eslint index.ts --ext .ts",
+    "test": "cd example && yarn && yarn test"
   },
   "files": [
     "dist/",
