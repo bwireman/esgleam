@@ -3,4 +3,10 @@ updates:
   - package-ecosystem: "npm"
     directory: "/"
     schedule:
-      interval: "daily"
+      interval: "weekly"
+    ignore:
+      - dependency-name: "typescript"
+      - dependency-name: "eslint"
+      - dependency-name: "@typescript-eslint/eslint-plugin"
+      - dependency-name: "@typescript-eslint/parser"
+      - dependency-name: "@types/node"
