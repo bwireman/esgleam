@@ -1,6 +1,6 @@
 # esgleam
 
-An [esbuild](https://esbuild.github.io/) plugin for [gleam](gleam.run/) ✨
+An [esbuild](https://esbuild.github.io/) plugin for [gleam](https://gleam.run/) ✨
 
 [![npm](https://img.shields.io/npm/v/esgleam)](https://www.npmjs.com/package/esgleam)
 [![npm](https://img.shields.io/npm/dt/esgleam)](https://www.npmjs.com/package/esgleam)
